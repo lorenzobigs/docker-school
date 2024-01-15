@@ -91,7 +91,7 @@ mongoose.connect(
 //'mongodb://[user:password@]:host?authSource=admin
 // per iniettare variabili d'ambiente in una stringa javascript, usa il backtick ` (ALT+96) invece dell'apice '
 // 'mongodb://mongoadmin:mongosecret@mongodb:27017/course-goals?authSource=admin',
-`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/course-goals?authSource=admin`
+`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/course-goals?authSource=admin`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

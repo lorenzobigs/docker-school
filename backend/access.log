@@ -1,0 +1,1 @@
+::ffff:172.19.0.1 - - [15/Jan/2024:14:28:22 +0000] "GET /goals HTTP/1.1" 200 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
