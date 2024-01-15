@@ -114,3 +114,10 @@ NB: se si usa Docker for Windows e WSL2 il live code reloading non funziona, ass
   -v /app/node_modules \
   **-e CHOKIDAR_USEPOLLING=true** \
   goals-react
+
+## DOCKER COMPOSE
+
+Vedi docker-compose.yaml per ulteriori info. Permette di non dovere utilizzare ogni volta i comandi per buildare le immagini e 
+runnare i containers. Definisci il file di configurazione e:
+ - docker-compose up --> builda le immagini e starta i container definiti ( -d in detached mode, --help per tutte le opzioni)
+ - docker-compose down --> stoppa tutti i container (-v per cancellare anche i volumes)

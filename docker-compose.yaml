@@ -1,0 +1,63 @@
+#check the latest version on https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3.8"
+
+#definisco i nomi dei miei servizi (i.e.containers)
+
+services:
+  mongodb:
+    # devo convertire questo comando nello yaml
+    #docker run \
+    #    --name mongodb \ <-> container_name
+    #    --rm -d  \ <-> di default nel compose.yaml
+    #    --network goals-net \ <-> docker compose in automatico crea e assegna tutti i service elencati nella stessa network
+    #    -v data:/data/db \ <-> volumes
+    #    -e MONGO_INITDB_ROOT_USERNAME=mongoadmin \ <-> environment
+    #    -e MONGO_INITDB_ROOT_PASSWORD=mongosecret \ <-> environment
+    #    mongo <-> image
+    image: 'mongo'
+    container_name: 'mongodb'
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=mongosecret
+    #se voglio usare un file con le variabili d'ambiente
+    env_file:
+      - env/example.env
+
+  backend:
+    #path del Dockerimage (in mongo ne uso una da Dockerhub, qui devo buildarla)
+    build: ./backend
+    container_name: 'goals-backend'
+    ports:
+      - '8080:8080'
+    environment:
+      - MONGODB_USERNAME=mongoadmin
+      - MONGODB_PASSWORD=mongosecret
+    volumes:
+      #in docker-compose per il bind-mount posso usare il relative path invece del complete path
+      #invece di 'C:\Users\lorenzo.grandi\Downloads\multi-01-starting-setup\multi-01-starting-setup\backend:/app'
+      - ./backend:/app
+      - logs:/app/logs
+      - /app/node_modules
+    # definisco ordine di creazione (in questo caso che deve venire dopo il services mongodb
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    container_name: 'goals-frontend'
+    ports:
+      - '3000:3000'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend/src:/app/src
+    #devo aggiungere l'opzione interactive -it
+    stdin_open: true
+    tty: true
+
+    #tutti i named volumes che vengono definiti nei singoli services devono anche essere elencati qui (NO per bind mount e unnamed)
+volumes:
+  data:
+  logs:
