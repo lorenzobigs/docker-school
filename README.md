@@ -105,3 +105,12 @@ Dato che nella mia applicazione di frontend è solo la cartella src che contiene
    **-v "C:\Users\lorenzo.grandi\Downloads\multi-01-starting-setup\multi-01-starting-setup\frontend\src:/app/src"** \
    **-v /app/node_modules** \
    goals-react
+
+NB: se si usa Docker for Windows e WSL2 il live code reloading non funziona, assicurarsi di usare la variabile d'ambiente CHOKIDAR_USEPOLLING=true:
+
+- docker run
+  --name goals-frontend --rm -d -it -p 3000:3000 \
+  -v "C:\Users\lorenzo.grandi\Downloads\multi-01-starting-setup\multi-01-starting-setup\frontend\src:/app/src" \
+  -v /app/node_modules \
+  **-e CHOKIDAR_USEPOLLING=true** \
+  goals-react
